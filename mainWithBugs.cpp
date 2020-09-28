@@ -102,7 +102,7 @@ int getEssayGrade()
 		//get grade of essay but make sure it's a number between 0 and 4
 		cout << "Grade of essay(numerical value from 0 (F) to 4 (A)): ";
 		std::cin >> gradeOfEssay;//get grade of essay
-    return gradeOfEssay;
+    		return gradeOfEssay;
 		if (gradeOfEssay <= 4 && gradeOfEssay >= 0)//check condition
 			break;
 		std::cin.clear();
