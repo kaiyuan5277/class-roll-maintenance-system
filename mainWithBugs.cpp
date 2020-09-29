@@ -83,7 +83,7 @@ int getPresentationGrade()
 		//get grade of presentation but make sure it's a number between 0 and 4
 		cout << "Grade of the presentation(numerical value from 0 (F) to 4 (A)): ";
 		std::cin >> gradeOfPresentation;//get grade of presentation
-		if (gradeOfPresentation <= 4 && gradeOfPresentation >= 0)//check condition
+		if (gradeOfPresentation < 4 && gradeOfPresentation > 0)//check condition
 			break;
 		std::cin.clear();
 		std::cin.ignore(123, '\n');
@@ -103,7 +103,7 @@ int getEssayGrade()
 		cout << "Grade of essay(numerical value from 0 (F) to 4 (A)): ";
 		std::cin >> gradeOfEssay;//get grade of essay
     		return gradeOfEssay;
-		if (gradeOfEssay <= 4 && gradeOfEssay >= 0)//check condition
+		if (gradeOfEssay < 4 && gradeOfEssay > 0)//check condition
 			break;
 		std::cin.clear();
 		std::cin.ignore(123, '\n');
@@ -122,7 +122,7 @@ int getTermProjectGrade()
 		//get grade of term project but make sure it's a number between 0 and 4
 		cout << "Grade of the term project(numerical value from 0 (F) to 4 (A)): ";
 		std::cin >> gradeOfTermProject;//get the grade of project
-		if (gradeOfTermProject <= 4 && gradeOfTermProject >= 0)//check condition
+		if (gradeOfTermProject < 4 && gradeOfTermProject > 0)//check condition
 			break;
 		std::cin.clear();
 		std::cin.ignore(123, '\n');
