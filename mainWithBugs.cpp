@@ -218,7 +218,7 @@ list<Student> delete_student(list<Student> Stud_list)//function for deleting a s
 	list<Student>::iterator itr;
 	for ( itr = Stud_list.begin(); itr != Stud_list.end(); ++itr) {//search a student from begin to end
 	
-		if (itr->firstName == firstname && itr->lastName == lastname) {//if find the student
+		if (itr->firstName == firstname) {//if find the student
 			
 			//add student's data into a new student
 			stud.firstName = itr->firstName;
