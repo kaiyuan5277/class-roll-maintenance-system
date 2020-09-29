@@ -279,8 +279,7 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 {
 	//declare variables
 	string firstname, lastname;
-	string new_firstname, new_lastname, new_usfid, new_email;
-	int new_GradeofPresentation,new_GradeofEssay, new_GradeofProject;
+	string new_firstname, new_lastname;
 
 	Student stud, stud1;
 	//get the name of a student who need to be modified
@@ -302,11 +301,6 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 		}
 	}//find the student then delete it
 	Student_list.remove(stud1);
-	/*for (list<Student>::iterator itr = Student_list.begin(); itr != Student_list.end(); ++itr) {
-		
-			cout << itr->firstName << " " << itr->lastName << " " << itr->usfid << " " << itr->email << " " << itr->GradeofPresentation << " " << itr->GradeofEssay << " " << itr->GradeofProject << "\n";
-		
-	}*/
 	stud = stud1;//save the student's data into stud
 	
 
