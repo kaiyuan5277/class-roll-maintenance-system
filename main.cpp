@@ -3,6 +3,7 @@
 #include <list>
 #include <fstream>
 #include <sstream>
+#include <climits>
 
 
 using namespace std;
@@ -401,38 +402,46 @@ void printMenu_Updata() {//menu for update data fields
 }
 int main()
 {
-	
 	list<Student> Student_list = read_student();//read data from a text file
-
-	while (true)//while loop to call interface 
-	{
+	int choice = 1;
+	while(choice != 0){
 		printMenu();
-		string choice;
-		std::cin >> choice;
-
-		if (choice == "0")//exit
-			break;
-		else if (choice == "1") {// addStudent and update the text file
-			Student_list = add_student(Student_list);
-			write_into(Student_list);
-		}
-		else if (choice == "2") {// delete student and update the text file
-			Student_list = delete_student(Student_list);
-			write_into(Student_list);
-		}
-		else if (choice == "3")
-			retrieve_name(Student_list);//retrieveStudentByName();
-		else if (choice == "4")
-			retrieve_usfid(Student_list);//retrieveStudentByID();
-		else if (choice == "5")
-			retrieve_email(Student_list);//retrieveStudentByEmail();
-		else if (choice == "6") {//update Data Fields then write into text file
-			Student_list = Updata_data(Student_list);
-			write_into(Student_list);
-		}
-		else
+		
+		while(!(cin >> choice)){
 			cout << "Invalid Number. Please try again." << endl;
-
+			cout << "Enter your choice [0-6]: ";
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		switch(choice){
+			case 0:
+				break;
+			case 1:
+				Student_list = add_student(Student_list);// addStudent and update the text file
+				write_into(Student_list);
+				break;
+			case 2:
+				Student_list = delete_student(Student_list);// delete student and update the text file
+				write_into(Student_list);
+				break;
+			case 3:
+				retrieve_name(Student_list);
+				break;
+			case 4:
+				retrieve_usfid(Student_list);
+				break;
+			case 5:
+				retrieve_email(Student_list);
+				break;
+			case 6:
+				Student_list = Updata_data(Student_list);//update selected Data Fields then write into text file
+				write_into(Student_list);
+				break;
+			default:
+				cout << "Invalid Number. Please try again." << endl;
+		}
 		cout << endl;
 	}
 
