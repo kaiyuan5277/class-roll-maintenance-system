@@ -5,7 +5,6 @@
 #include <sstream>
 #include <climits>
 
-
 using namespace std;
 
 string getName();//function for get name
@@ -15,6 +14,7 @@ int getPresentationGrade();//function for get presentation grade
 int getEssayGrade();//function for get essay grade
 int getTermProjectGrade();//function for get project grade
 void printMenu_Updata();//function for update data menu
+
 
 string getName()
 {
@@ -187,16 +187,30 @@ void write_into(list<Student> Student_list)//write data into file
 list<Student> add_student(list<Student> Stud_list)//function for adding student into file
 {
 	Student stud;//declare a student
-
-	string firstname, lastname;//declare variables
+	bool unique = false;
+	list<Student>::iterator itr;//declare a iterator
+	string firstname, lastname, usfid;//declare variables
 	string name = getName();//get name by calling function getName()
 	stringstream ss(name);
 	getline(ss, firstname, ' ');
 	getline(ss, lastname);
-
+	
 	stud.firstName = firstname;//get first name and last name
 	stud.lastName = lastname;
-	stud.usfid = getUSFID();//get usf id by calling function 
+	while(!unique){
+		usfid = getUSFID();//get usf id by calling function 
+		unique = true;
+		for (itr = Stud_list.begin(); itr != Stud_list.end(); ++itr) {
+			if(itr->usfid == usfid){//Check if it is unique
+				cout << "That USF ID is not unique. Try again." << endl;
+				unique = false;
+				break;
+			}
+		}
+		if(unique){
+			stud.usfid = usfid;
+		}
+	}
 	stud.email = getEmail();//get email by calling function 
 	stud.GradeofPresentation = getPresentationGrade();//get presentation grade by calling function 
 	stud.GradeofEssay = getEssayGrade();//get essay grade by calling function 

@@ -208,8 +208,9 @@ void write_into(list<Student> Student_list)//write data into file
 list<Student> add_student(list<Student> Stud_list)//function for adding student into file
 {
 	Student stud;//declare a student
-
-	string firstname, lastname;//declare variables
+	list<Student>::iterator itr;
+	string firstname, lastname, usfid;//declare variables
+	bool unique = false;
 	string name = getName();//get name by calling function getName()
 	stringstream ss(name);
 	getline(ss, firstname, ' ');
@@ -217,7 +218,20 @@ list<Student> add_student(list<Student> Stud_list)//function for adding student 
 
 	stud.firstName = firstname;//get first name and last name
 	stud.lastName = lastname;
-	stud.usfid = getUSFID();//get usf id by calling function 
+	while(!unique){
+		usfid = getUSFID();//get usf id by calling function 
+		unique = true;
+		for (itr = Stud_list.begin(); itr != Stud_list.end(); ++itr) {
+			if(caseInSensStringCompare(itr->usfid, usfid)){//Check if it is unique
+				cout << "That USF ID is not unique. Try again." << endl;
+				unique = false;
+				break;
+			}
+		}
+		if(unique){
+			stud.usfid = usfid;
+		}
+	}
 	stud.email = getEmail();//get email by calling function 
 	stud.GradeofPresentation = getPresentationGrade();//get presentation grade by calling function 
 	stud.GradeofEssay = getEssayGrade();//get essay grade by calling function 
