@@ -280,7 +280,6 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 	//declare variables
 	string firstname, lastname;
 	string new_firstname, new_lastname;
-
 	Student stud, stud1;
 	//get the name of a student who need to be modified
 	cout << "Enter the first name you want to modify: ";
