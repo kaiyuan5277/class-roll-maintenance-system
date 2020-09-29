@@ -5,6 +5,8 @@
 #include <sstream>
 #include <climits>
 
+#include <cctype>
+
 
 using namespace std;
 
@@ -15,6 +17,25 @@ int getPresentationGrade();//function for get presentation grade
 int getEssayGrade();//function for get essay grade
 int getTermProjectGrade();//function for get project grade
 void printMenu_Updata();//function for update data menu
+
+bool compareChar(char & c1, char & c2)
+{
+    if (c1 == c2)
+        return true;
+    else if (std::toupper(c1) == std::toupper(c2))
+        return true;
+    return false;
+}
+/*
+ * Case Insensitive String Comparision
+ */
+bool caseInSensStringCompare(std::string & str1, std::string &str2)
+{
+    return ( (str1.size() == str2.size() ) &&
+             std::equal(str1.begin(), str1.end(), str2.begin(), &compareChar) );
+}
+
+
 
 string getName()
 {
@@ -28,6 +49,7 @@ string getName()
 		cout << "Last Name: ";
 		std::cin >> lastName;//get last name
 		if ((firstName.length() + lastName.length()) <= 40)//check condition
+			//print("Error, name and last name can not be longer that 40 characters");
 			break;
 		std::cin.clear();
 		std::cin.ignore(123, '\n');
@@ -243,8 +265,10 @@ void retrieve_name(list<Student> Student_list)//function for retrieve name
 	cout << "Enter the last name you want to retrieve: ";
 	std::cin >> lastname;
 	list<Student>::iterator it;
-	for (it = Student_list.begin(); it != Student_list.end(); ++it) {//search in the list
-		if (it->firstName == firstname && it->lastName == lastname) {
+	for (it = Student_list.begin(); it != Student_list.end(); ++it) 
+	{//search in the list
+		if (((caseInSensStringCompare(it->firstName, firstname))) && (caseInSensStringCompare(it->lastName, lastname)))
+		{
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}//if find student, then print the data
 	}
@@ -269,7 +293,7 @@ void retrieve_email(list<Student> Student_list)//function for retrieve by email
 	std::cin >> email;//get email address
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
-		if (it->email == email) {
+		if (caseInSensStringCompare(it->email, email)) {
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}
 	}//search through the list, if find the email, then print the information
