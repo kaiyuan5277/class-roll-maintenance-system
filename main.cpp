@@ -382,7 +382,7 @@ void printMenu_Updata() {//menu for update data fields
 	cout << "6. GradeofProject" << endl;
 	cout << "****************************************************" << endl;
 	cout << endl;
-	cout << "Enter your choice [0-7]: ";
+	cout << "Enter your choice [0-6]: ";
 
 	return;
 	
