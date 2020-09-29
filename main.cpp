@@ -279,7 +279,7 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 	//declare variables
 	string firstname, lastname;
 	string new_firstname, new_lastname;
-
+	bool studFound = 0;
 	Student stud, stud1;
 	//get the name of a student who need to be modified
 	cout << "Enter the first name you want to modify: ";
@@ -297,13 +297,16 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 			stud1.GradeofPresentation = it->GradeofPresentation;
 			stud1.GradeofEssay = it->GradeofEssay;
 			stud1.GradeofProject = it->GradeofProject;
+			studFound = 1;
 		}
 	}//find the student then delete it
-	Student_list.remove(stud1);
-	stud = stud1;//save the student's data into stud
+	if(studFound){
+		Student_list.remove(stud1);
+		stud = stud1;//save the student's data into stud
+	}
 	
 
-	while (true) {
+	while (studFound) {
 		printMenu_Updata();//print menu
 		int choice;
 		
@@ -348,7 +351,12 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 		else
 			cout << "Invalid Number. Please try again." << endl;
 	}
-	Student_list.push_back(stud);//add new student into list
+	if(studFound){
+		Student_list.push_back(stud);//add new student into list
+	}
+	else{
+		cout << endl << "Student not found." << endl;
+	}
 	return Student_list;
 }
 ;
