@@ -32,7 +32,7 @@ string getName()
 		std::cin.ignore(123, '\n');
 		cout << "Name must be less than 40 characters" << endl;//output error
 	}
-	string name = firstName + " " + lastName;//get full name
+	string name = firstName + lastName;//get full name
 	return name;
 }
 
