@@ -2,8 +2,8 @@ loki ABC u7894564 loki@usf.edu 1 2 3
 Stark ABC u7894564 Tony@usf.edu 1 2 3
 Fury ABC u20148300 Fury@usf.edu 1 3 4
 Thor ABC u20148633 Thor@usf.edu 2 3 4
-Banner ABC u887766 Banner@usf.edu 1 10 9
+Banner ABC u887766 Banner@usf.edu 1 2 4
 Coulson ABC u123456 Coulson@usf.edu 1 2 3
-Maria ABC u789955 Maria@usf.edu 2 8 9
-Barton ABC u771293 Barton@usf.edu 9 6 2
+Maria ABC u789955 Maria@usf.edu 2 1 4
+Barton ABC u771293 Barton@usf.edu 4 3 2
 kaiyuan liu u201488888 kaiyuan@usf.edu 1 2 3
