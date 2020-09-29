@@ -310,7 +310,14 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 		cout << endl << stud.firstName << " " << stud.lastName << " " << stud.usfid << " " << stud.email << " " << stud.GradeofPresentation << " " << stud.GradeofEssay << " " << stud.GradeofProject << "\n" << "\n";
 		printMenu_Updata();//print menu
 		int choice;
-		std::cin >> choice;//get choice
+		while(!(cin >> choice)){
+			cout << "Invalid Number. Please try again." << endl;
+			cout << "Enter your choice [0-6]: ";
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
 		cout << endl;
 		if (choice == 0) {//exit
 			
@@ -402,6 +409,7 @@ void printMenu_Updata() {//menu for update data fields
 }
 int main()
 {
+
 	list<Student> Student_list = read_student();//read data from a text file
 	int choice = 1;
 	while(choice != 0){
