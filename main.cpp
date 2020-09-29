@@ -236,12 +236,15 @@ list<Student> delete_student(list<Student> Stud_list)//function for deleting a s
 	std::cin >> firstname;//get the first name
 	cout << "Enter the last name you want to delete: ";
 	std::cin >> lastname;//get last name
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 	Student stud;//declare a new student
+	bool found = false;
 	list<Student>::iterator itr;
 	for ( itr = Stud_list.begin(); itr != Stud_list.end(); ++itr) {//search a student from begin to end
 	
-		if (itr->firstName == firstname && itr->lastName == lastname) {//if find the student
-			
+		if (((caseInSensStringCompare(itr->firstName, firstname))) && (caseInSensStringCompare(itr->lastName, lastname))) {//if find the student
+			found = true;
 			//add student's data into a new student
 			stud.firstName = itr->firstName;
 			stud.lastName = itr->lastName;
@@ -253,7 +256,13 @@ list<Student> delete_student(list<Student> Stud_list)//function for deleting a s
 		}
 		
 	}
-	Stud_list.remove(stud);//delete student 
+	if(found){
+		cout << "Removing " << firstname << " " << lastname << "." << endl;
+		Stud_list.remove(stud);//delete student 
+	}
+	else{
+		cout << firstname << " " << lastname << " was not found." << endl;
+	}
 	return Stud_list;//return new list
 };
 
@@ -264,13 +273,20 @@ void retrieve_name(list<Student> Student_list)//function for retrieve name
 	std::cin >> firstname;
 	cout << "Enter the last name you want to retrieve: ";
 	std::cin >> lastname;
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
+	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) 
 	{//search in the list
 		if (((caseInSensStringCompare(it->firstName, firstname))) && (caseInSensStringCompare(it->lastName, lastname)))
 		{
+			found = true;
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}//if find student, then print the data
+	}
+	if(!found){
+		cout << firstname << " " << lastname << " was not found." << endl;
 	}
 }
 void retrieve_usfid(list<Student> Student_list)//function for retrieve by usf id
@@ -278,11 +294,16 @@ void retrieve_usfid(list<Student> Student_list)//function for retrieve by usf id
 	string usfid;
 	cout << "Enter the usf id you want to retrieve: ";
 	std::cin >> usfid;//get usf id
+	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {//search in the list
 		if (it->usfid == usfid) {
+			found = true;
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}//if find the id, then print the information
+	}
+	if(!found){
+		cout << usfid << " was not found." << endl;
 	}
 }
 
@@ -291,12 +312,17 @@ void retrieve_email(list<Student> Student_list)//function for retrieve by email
 	string email;
 	cout << "Enter the email you want to retrieve: ";
 	std::cin >> email;//get email address
+	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
 		if (caseInSensStringCompare(it->email, email)) {
+			found = true;
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}
 	}//search through the list, if find the email, then print the information
+	if(!found){
+		cout << email << " was not found." << endl;
+	}
 }
 
 list<Student> Updata_data(list<Student> Student_list)//function for modify data then update
@@ -391,7 +417,7 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 		Student_list.push_back(stud);//add new student into list
 	}
 	else{
-		cout << endl << "Student not found." << endl;
+		cout << firstname << " " << lastname << " was not found." << endl;
 	}
 	return Student_list;
 }
