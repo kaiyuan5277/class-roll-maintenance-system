@@ -294,6 +294,8 @@ void retrieve_usfid(list<Student> Student_list)//function for retrieve by usf id
 	string usfid;
 	cout << "Enter the usf id you want to retrieve: ";
 	std::cin >> usfid;//get usf id
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {//search in the list
@@ -312,6 +314,8 @@ void retrieve_email(list<Student> Student_list)//function for retrieve by email
 	string email;
 	cout << "Enter the email you want to retrieve: ";
 	std::cin >> email;//get email address
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
@@ -337,6 +341,8 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 	std::cin >> firstname;
 	cout << "Enter the last name you want to modify: ";
 	std::cin >> lastname;
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
 		if (it->firstName == firstname && it->lastName == lastname) {
