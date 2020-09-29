@@ -279,7 +279,7 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 	//declare variables
 	string firstname, lastname;
 	string new_firstname, new_lastname;
-	bool studFound = 0;
+	bool studFound;
 	Student stud, stud1;
 	//get the name of a student who need to be modified
 	cout << "Enter the first name you want to modify: ";
@@ -289,7 +289,6 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
 		if (it->firstName == firstname && it->lastName == lastname) {
-			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 			stud1.firstName = it->firstName;//get the student's data into stud1
 			stud1.lastName = it->lastName;
 			stud1.usfid = it->usfid;
@@ -307,16 +306,17 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 	
 
 	while (studFound) {
+		cout << endl << stud.firstName << " " << stud.lastName << " " << stud.usfid << " " << stud.email << " " << stud.GradeofPresentation << " " << stud.GradeofEssay << " " << stud.GradeofProject << "\n" << "\n";
 		printMenu_Updata();//print menu
 		int choice;
-		
 		std::cin >> choice;//get choice
-		
+		cout << endl;
 		if (choice == 0) {//exit
 			
 			break;
 		}
 		else if (choice == 1) {//modify name
+			cout << "Currently: " << stud.firstName << " " << stud.lastName << endl << "What's it going to be?" << endl;
 			string name = getName();
 			stringstream ss(name);
 			getline(ss, new_firstname, ' ');
@@ -328,28 +328,32 @@ list<Student> Updata_data(list<Student> Student_list)//function for modify data 
 			continue;
 		}
 		else if (choice == 2) {//modify usf id
+			cout << "Currently: " << stud.usfid << endl << "What's it going to be?" << endl;
 			stud.usfid = getUSFID();
 			continue;
 		}
 		else if (choice == 3) {//modify email
+			cout << "Currently: " << stud.email << endl << "What's it going to be?" << endl;
 			stud.email = getEmail();
 			continue;
 		}
 		else if (choice == 4) {//modify grade of presentation
-			
+			cout << "Currently: " << stud.GradeofPresentation << endl << "What's it going to be?" << endl;
 			stud.GradeofPresentation = getPresentationGrade();
 			continue;
 		}
 		else if (choice == 5) {//modify the grade of essay
+			cout << "Currently: " << stud.GradeofEssay << endl << "What's it going to be?" << endl;
 			stud.GradeofEssay = getEssayGrade();
 			continue;
 		}
 		else if (choice == 6) {//modify the grade of project
+			cout << "Currently: " << stud.GradeofProject << endl << "What's it going to be?" << endl;
 			stud.GradeofProject = getTermProjectGrade();
 			continue;
 		}
 		else
-			cout << "Invalid Number. Please try again." << endl;
+			cout << "Invalid Number. Please try again." << endl << "What's it going to be?" << endl;
 	}
 	if(studFound){
 		Student_list.push_back(stud);//add new student into list
