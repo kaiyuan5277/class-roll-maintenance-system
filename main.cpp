@@ -293,7 +293,8 @@ void retrieve_email(list<Student> Student_list)//function for retrieve by email
 	std::cin >> email;//get email address
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
-		if (caseInSensStringCompare(it->email, email)) {
+		if (caseInSensStringCompare(it->email, email)) 
+		{
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}
 	}//search through the list, if find the email, then print the information

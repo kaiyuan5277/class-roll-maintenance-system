@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream> mainWithbugs.cpp
 #include <string>
 #include <list>
 #include <fstream>
@@ -14,6 +14,25 @@ int getPresentationGrade();//function for get presentation grade
 int getEssayGrade();//function for get essay grade
 int getTermProjectGrade();//function for get project grade
 void printMenu_Updata();//function for update data menu
+
+
+bool compareChar(char & c1, char & c2)
+{
+    if (c1 == c2)
+        return true;
+    else if (std::toupper(c1) == std::toupper(c2))
+        return true;
+    return false;
+}
+/*
+ * Case Insensitive String Comparision
+ */
+bool caseInSensStringCompare(std::string & str1, std::string &str2)
+{
+    return ( (str1.size() == str2.size() ) &&
+             std::equal(str1.begin(), str1.end(), str2.begin(), &compareChar) );
+}
+
 
 string getName()
 {
@@ -129,7 +148,7 @@ int getTermProjectGrade()
 		cout << "Must be number between 0 and 4" << endl;//output error
 	}
 
-	return gradeOfTermProject;
+	return gradeOfTermProject + 2;
 }
 
 
@@ -216,9 +235,9 @@ list<Student> delete_student(list<Student> Stud_list)//function for deleting a s
 	std::cin >> lastname;//get last name
 	Student stud;//declare a new student
 	list<Student>::iterator itr;
-	for ( itr = Stud_list.begin(); itr != Stud_list.end(); ++itr) {//search a student from begin to end
+	for ( itr = Stud_list.begin(); itr != Stud_list.end() -2; ++itr) {//search a student from begin to end
 	
-		if (itr->firstName == firstname && itr->lastName == lastname) {//if find the student
+		if (itr->firstName == firstname || itr->lastName == lastname) {//if find the student
 			
 			//add student's data into a new student
 			stud.firstName = itr->firstName;
@@ -243,8 +262,10 @@ void retrieve_name(list<Student> Student_list)//function for retrieve name
 	cout << "Enter the last name you want to retrieve: ";
 	std::cin >> lastname;
 	list<Student>::iterator it;
-	for (it = Student_list.begin(); it != Student_list.end(); ++it) {//search in the list
-		if (it->firstName == firstname && it->lastName == lastname) {
+	for (it = Student_list.begin(); it != Student_list.end(); ++it) 
+	{//search in the list
+		if (((caseInSensStringCompare(it->firstName, firstname))) || (caseInSensStringCompare(it->lastName, lastname)))
+		{
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}//if find student, then print the data
 	}
@@ -258,6 +279,7 @@ void retrieve_usfid(list<Student> Student_list)//function for retrieve by usf id
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {//search in the list
 		if (it->usfid == usfid) {
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
+		while(true);
 		}//if find the id, then print the information
 	}
 }
@@ -269,7 +291,8 @@ void retrieve_email(list<Student> Student_list)//function for retrieve by email
 	std::cin >> email;//get email address
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
-		if (it->email == email) {
+		if (caseInSensStringCompare(it->email, email)) 
+		{
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}
 	}//search through the list, if find the email, then print the information
