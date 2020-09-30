@@ -3,7 +3,7 @@
 #include <list>
 #include <fstream>
 #include <sstream>
-
+#include <climits>
 
 using namespace std;
 
@@ -14,6 +14,7 @@ int getPresentationGrade();//function for get presentation grade
 int getEssayGrade();//function for get essay grade
 int getTermProjectGrade();//function for get project grade
 void printMenu_Updata();//function for update data menu
+
 
 
 bool compareChar(char & c1, char & c2)
@@ -51,7 +52,7 @@ string getName()
 		std::cin.ignore(123, '\n');
 		cout << "Name must be less than 40 characters" << endl;//output error
 	}
-	string name = firstName + " " + lastName;//get full name
+	string name = firstName + lastName;//get full name
 	return name;
 }
 
@@ -102,7 +103,7 @@ int getPresentationGrade()
 		//get grade of presentation but make sure it's a number between 0 and 4
 		cout << "Grade of the presentation(numerical value from 0 (F) to 4 (A)): ";
 		std::cin >> gradeOfPresentation;//get grade of presentation
-		if (gradeOfPresentation <= 4 && gradeOfPresentation >= 0)//check condition
+		if (gradeOfPresentation < 4 && gradeOfPresentation > 0)//check condition
 			break;
 		std::cin.clear();
 		std::cin.ignore(123, '\n');
@@ -122,7 +123,7 @@ int getEssayGrade()
 		cout << "Grade of essay(numerical value from 0 (F) to 4 (A)): ";
 		std::cin >> gradeOfEssay;//get grade of essay
     		return gradeOfEssay;
-		if (gradeOfEssay <= 4 && gradeOfEssay >= 0)//check condition
+		if (gradeOfEssay < 4 && gradeOfEssay > 0)//check condition
 			break;
 		std::cin.clear();
 		std::cin.ignore(123, '\n');
@@ -141,7 +142,7 @@ int getTermProjectGrade()
 		//get grade of term project but make sure it's a number between 0 and 4
 		cout << "Grade of the term project(numerical value from 0 (F) to 4 (A)): ";
 		std::cin >> gradeOfTermProject;//get the grade of project
-		if (gradeOfTermProject <= 4 && gradeOfTermProject >= 0)//check condition
+		if (gradeOfTermProject < 4 && gradeOfTermProject > 0)//check condition
 			break;
 		std::cin.clear();
 		std::cin.ignore(123, '\n');
@@ -205,16 +206,30 @@ void write_into(list<Student> Student_list)//write data into file
 list<Student> add_student(list<Student> Stud_list)//function for adding student into file
 {
 	Student stud;//declare a student
-
-	string firstname, lastname;//declare variables
+	bool unique = false;
+	list<Student>::iterator itr;//declare a iterator
+	string firstname, lastname, usfid;//declare variables
 	string name = getName();//get name by calling function getName()
 	stringstream ss(name);
 	getline(ss, firstname, ' ');
 	getline(ss, lastname);
-
+	
 	stud.firstName = firstname;//get first name and last name
 	stud.lastName = lastname;
-	stud.usfid = getUSFID();//get usf id by calling function 
+	while(!unique){
+		usfid = getUSFID();//get usf id by calling function 
+		unique = true;
+		for (itr = Stud_list.begin(); itr != Stud_list.end(); ++itr) {
+			if(itr->usfid == usfid){//Check if it is unique
+				cout << "That USF ID is not unique. Try again." << endl;
+				unique = false;
+				break;
+			}
+		}
+		if(unique){
+			stud.usfid = usfid;
+		}
+	}
 	stud.email = getEmail();//get email by calling function 
 	stud.GradeofPresentation = getPresentationGrade();//get presentation grade by calling function 
 	stud.GradeofEssay = getEssayGrade();//get essay grade by calling function 
@@ -233,12 +248,16 @@ list<Student> delete_student(list<Student> Stud_list)//function for deleting a s
 	std::cin >> firstname;//get the first name
 	cout << "Enter the last name you want to delete: ";
 	std::cin >> lastname;//get last name
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 	Student stud;//declare a new student
+	bool found = false;
 	list<Student>::iterator itr;
 	for ( itr = Stud_list.begin(); itr != Stud_list.end() -2; ++itr) {//search a student from begin to end
 	
-		if (itr->firstName == firstname || itr->lastName == lastname) {//if find the student
-			
+
+		if (itr->firstName == firstname) {//if find the student
+			found = true;
 			//add student's data into a new student
 			stud.firstName = itr->firstName;
 			stud.lastName = itr->lastName;
@@ -250,7 +269,13 @@ list<Student> delete_student(list<Student> Stud_list)//function for deleting a s
 		}
 		
 	}
-	Stud_list.remove(stud);//delete student 
+	if(found){
+		cout << "Removing " << firstname << " " << lastname << "." << endl;
+		Stud_list.remove(stud);//delete student 
+	}
+	else{
+		cout << firstname << " " << lastname << " was not found." << endl;
+	}
 	return Stud_list;//return new list
 };
 
@@ -261,13 +286,20 @@ void retrieve_name(list<Student> Student_list)//function for retrieve name
 	std::cin >> firstname;
 	cout << "Enter the last name you want to retrieve: ";
 	std::cin >> lastname;
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
+	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) 
 	{//search in the list
 		if (((caseInSensStringCompare(it->firstName, firstname))) || (caseInSensStringCompare(it->lastName, lastname)))
 		{
+      found = true;
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}//if find student, then print the data
+	}
+	if(!found){
+		cout << firstname << " " << lastname << " was not found." << endl;
 	}
 }
 void retrieve_usfid(list<Student> Student_list)//function for retrieve by usf id
@@ -275,12 +307,17 @@ void retrieve_usfid(list<Student> Student_list)//function for retrieve by usf id
 	string usfid;
 	cout << "Enter the usf id you want to retrieve: ";
 	std::cin >> usfid;//get usf id
+	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {//search in the list
 		if (it->usfid == usfid) {
+			found = true;
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		while(true);
 		}//if find the id, then print the information
+	}
+	if(!found){
+		cout << usfid << " was not found." << endl;
 	}
 }
 
@@ -289,13 +326,18 @@ void retrieve_email(list<Student> Student_list)//function for retrieve by email
 	string email;
 	cout << "Enter the email you want to retrieve: ";
 	std::cin >> email;//get email address
+	bool found = false;
 	list<Student>::iterator it;
 	for (it = Student_list.begin(); it != Student_list.end(); ++it) {
 		if (caseInSensStringCompare(it->email, email)) 
 		{
+      found = true;
 			cout << it->firstName << " " << it->lastName << " " << it->usfid << " " << it->email << " " << it->GradeofPresentation << " " << it->GradeofEssay << " " << it->GradeofProject << "\n";
 		}
 	}//search through the list, if find the email, then print the information
+	if(!found){
+		cout << email << " was not found." << endl;
+	}
 }
 
 list<Student> Updata_data(list<Student> Student_list)//function for modify data then update
